@@ -4,22 +4,18 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URI,
-  ssl: {
-    rejectUnauthorized: false, //
-  },
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: Number(process.env.DB_PORT),
 });
 
-const connectWithRetry = async () => {
-  try {
-    await pool.query("SELECT 1");
-    console.log("Connected to PostgreSQL");
-  } catch (err) {
-    console.log("DB sleeping, retrying...");
-    setTimeout(connectWithRetry, 3000);
-  }
-};
-
-connectWithRetry();
+pool.query("SELECT 1")
+  .then(() => console.log("Connected to PostgreSQL"))
+  .catch((err) => {
+    console.error("DB Connection Error:", err);
+    process.exit(1);
+  });
 
 export default pool;
