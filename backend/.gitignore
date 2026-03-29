@@ -3,3 +3,9 @@
 
 # env files
 .env
+
+# production
+/build
+
+# build
+/dist   

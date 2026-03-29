@@ -12,7 +12,7 @@ const pool = new Pool({
 });
 
 pool.query("SELECT 1")
-  .then(() => console.log("✅ Connected to PostgreSQL"))
+  .then(() => console.log("Connected to PostgreSQL"))
   .catch((err) => {
     console.error("DB Connection Error:", err);
     process.exit(1);
